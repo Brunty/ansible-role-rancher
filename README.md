@@ -24,7 +24,7 @@ Example Playbook
 
     - hosts: servers
       roles:
-         - { role: brunty.rancher }
+         - { role: Brunty.rancher }
 
 License
 -------
