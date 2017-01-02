@@ -11,7 +11,7 @@
   wait_for: port={{ rancher_port }}
 
 - name: Display URL that Rancher is available at
-  debug: msg="Rancher has started and is available here:
+  debug: msg="Rancher has started and is available here
     http://{{ ansible_default_ipv4.address }}:{{ rancher_port }}"
 
 
