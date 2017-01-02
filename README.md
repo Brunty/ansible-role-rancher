@@ -1,4 +1,4 @@
-brunty.rancher
+Brunty.rancher [![Build Status](https://travis-ci.org/Brunty/ansible-role-rancher.svg?branch=master)](https://travis-ci.org/Brunty/ansible-role-rancher)
 =========
 
 Installs rancher
