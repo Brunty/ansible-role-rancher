@@ -1,0 +1,16 @@
+galaxy_info:
+  author: Matt Brunt
+  description: An ansible role to install Rancher. Requires that docker be installed and working.
+  company: MFYU
+
+  license: license (MIT)
+
+  min_ansible_version: 1.2
+
+  galaxy_tags:
+    - rancher
+    - docker
+    - orchestration
+    - containers
+
+  dependencies: []

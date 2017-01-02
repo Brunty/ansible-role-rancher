@@ -1,0 +1,8 @@
+---
+rancher_version: "latest"
+rancher_agent_version: "latest"
+rancher_port: 8080
+rancher_name: "rancher_server"
+rancher_agent_name: "rancher_agent"
+rancher_volume: "/var/lib/rancher/mysql"
+rancher_server_as_host: true

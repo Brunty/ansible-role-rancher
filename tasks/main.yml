@@ -1,0 +1,47 @@
+---
+- name: Start Rancher
+  docker_container:
+    name: "{{ rancher_name }}"
+    image: rancher/server:{{ rancher_version }}
+    restart_policy: unless-stopped
+    published_ports: "{{ rancher_port }}:8080"
+    volume: "{{ rancher_volume }}"
+
+- name: Wait for rancher to start
+  wait_for: port={{ rancher_port }}
+
+- name: Display URL that Rancher is available at
+  debug: msg="Rancher has started and is available here:
+    http://{{ ansible_default_ipv4.address }}:{{ rancher_port }}"
+
+
+- name: Install python-httplib2
+  apt: name=python-httplib2 update_cache=yes
+
+- name: Register the token URL of Rancher
+  action: uri
+      method=POST
+      status_code=201
+      url="http://{{ rancher_server_ipv4 }}:{{ rancher_port }}/v2-beta/registrationtokens?projectId=1a5" return_content=yes
+  register: rancher_registration_token_url
+
+- name: Register the registration URL of Rancher
+  action: uri
+      method=GET
+      url={{ rancher_registration_token_url.json['links']['self'] }} return_content=yes
+  register: rancher_registration_token
+
+- debug: msg="Rancher token {{ rancher_registration_token }}"
+
+- debug: msg="Rancher registration URL {{ rancher_registration_token.json['registrationUrl'] }}"
+
+- name: Register as a host with Rancher
+  docker_container:
+    name: "{{ rancher_agent_name }}"
+    image: rancher/agent:{{ rancher_agent_version }}
+    privileged: yes
+    detach: True
+    volumes: /var/run/docker.sock:/var/run/docker.sock
+    command: "{{ rancher_registration_token.json['registrationUrl'] }}"
+    state: started
+  when: rancher_server_as_host
