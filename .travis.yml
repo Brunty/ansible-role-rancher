@@ -2,6 +2,8 @@
 language: python
 python: "2.7"
 
+services: docker
+
 # Use the new container infrastructure
 sudo: false
 
@@ -26,7 +28,7 @@ script:
   # Syntax check the role
   - ansible-playbook tests/test.yml -i tests/inventory --syntax-check
   # Now run the role
-  - ansible-playbook tests/test.yml -i tests/inventory
+  - ansible-playbook tests/test.yml -i tests/inventory --connection=local
 
 notifications:
   webhooks: https://galaxy.ansible.com/api/v1/notifications/
