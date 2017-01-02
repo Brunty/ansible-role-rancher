@@ -5,7 +5,7 @@
     image: rancher/server:{{ rancher_version }}
     restart_policy: unless-stopped
     published_ports: "{{ rancher_port }}:8080"
-    volume: "{{ rancher_volume }}:/var/lib/mysql"
+    volume: {{ rancher_volume }}:/var/lib/mysql
 
 - name: Wait for rancher to start
   wait_for: port={{ rancher_port }}
